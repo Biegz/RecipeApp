@@ -13,7 +13,7 @@ struct RecipeApp: App {
     var body: some Scene {
         WindowGroup {
             TabView {
-                SearchView(viewModel: SearchViewModel())
+                SearchView(viewModel: SearchViewModel(networkManager: networkManager))
                     .tabItem { Text("Search") }
                 
                 FavoritesView(viewModel: FavoritesViewModel())

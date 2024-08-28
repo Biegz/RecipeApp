@@ -15,6 +15,9 @@
 		CEA21FDB2C7ECF36004E38F3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FDA2C7ECF36004E38F3 /* NetworkManager.swift */; };
 		CEA21FDE2C7ED4AE004E38F3 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FDD2C7ED4AE004E38F3 /* Endpoint.swift */; };
 		CEA21FE02C7ED4CC004E38F3 /* RecipesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FDF2C7ED4CC004E38F3 /* RecipesEndpoint.swift */; };
+		CEA21FE32C7ED8D2004E38F3 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */; };
+		CEA21FE62C7EDB3B004E38F3 /* RecipeSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE52C7EDB3B004E38F3 /* RecipeSearchResponse.swift */; };
+		CEA21FE82C7EDB53004E38F3 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		CEA21FDA2C7ECF36004E38F3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CEA21FDD2C7ED4AE004E38F3 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		CEA21FDF2C7ED4CC004E38F3 /* RecipesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesEndpoint.swift; sourceTree = "<group>"; };
+		CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
+		CEA21FE52C7EDB3B004E38F3 /* RecipeSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResponse.swift; sourceTree = "<group>"; };
+		CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,8 @@
 		CEA21FC52C7ECCC3004E38F3 /* RecipeApp */ = {
 			isa = PBXGroup;
 			children = (
+				CEA21FE42C7EDB29004E38F3 /* Model */,
+				CEA21FE12C7ED8C4004E38F3 /* RecipeDetail */,
 				CEA21FD72C7ECE89004E38F3 /* Favorites */,
 				CEA21FD62C7ECE4F004E38F3 /* Search */,
 				CEA21FD52C7ECE27004E38F3 /* Network */,
@@ -99,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				CEA21FC82C7ECCC3004E38F3 /* SearchView.swift */,
+				CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -109,6 +118,22 @@
 				CEA21FD82C7ECEA1004E38F3 /* FavoritesView.swift */,
 			);
 			path = Favorites;
+			sourceTree = "<group>";
+		};
+		CEA21FE12C7ED8C4004E38F3 /* RecipeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */,
+			);
+			path = RecipeDetail;
+			sourceTree = "<group>";
+		};
+		CEA21FE42C7EDB29004E38F3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CEA21FE52C7EDB3B004E38F3 /* RecipeSearchResponse.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,10 +206,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEA21FE32C7ED8D2004E38F3 /* RecipeDetailView.swift in Sources */,
 				CEA21FE02C7ED4CC004E38F3 /* RecipesEndpoint.swift in Sources */,
+				CEA21FE62C7EDB3B004E38F3 /* RecipeSearchResponse.swift in Sources */,
 				CEA21FDB2C7ECF36004E38F3 /* NetworkManager.swift in Sources */,
 				CEA21FC92C7ECCC3004E38F3 /* SearchView.swift in Sources */,
 				CEA21FC72C7ECCC3004E38F3 /* RecipeApp.swift in Sources */,
+				CEA21FE82C7EDB53004E38F3 /* SearchViewModel.swift in Sources */,
 				CEA21FD92C7ECEA1004E38F3 /* FavoritesView.swift in Sources */,
 				CEA21FDE2C7ED4AE004E38F3 /* Endpoint.swift in Sources */,
 			);
