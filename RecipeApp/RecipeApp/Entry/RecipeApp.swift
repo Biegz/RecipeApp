@@ -14,10 +14,20 @@ struct RecipeApp: App {
         WindowGroup {
             TabView {
                 SearchView(viewModel: SearchViewModel(networkManager: networkManager))
-                    .tabItem { Text("Search") }
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "magnifyingglass")
+                            Text("Search")
+                        }
+                    }
                 
                 FavoritesView(viewModel: FavoritesViewModel())
-                    .tabItem { Text("Favorites") }
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "star")
+                            Text("Favorites")
+                        }
+                    }
             }
         }
     }
