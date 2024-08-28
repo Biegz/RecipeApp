@@ -8,14 +8,14 @@
 import SwiftUI
 import CoreData
 
-class RecipeViewModel: ObservableObject {
-    let networkManager: NetworkManager = NetworkManager(baseUrl: "https://api.spoonacular.com")
+class SearchViewModel: ObservableObject {
+    let networkManager: NetworkManager
     let container: NSPersistentContainer
     
+    @Published var selectedRecipeId: Int?
     @Published var recipeInfoIsPresented: Bool = false
     @Published var searchText: String = ""
     @Published var recipes: [Recipe] = []
-    @Published var recipeInfo: RecipeInfoResponse?
     var currentOffset: Int = 0
     
     private var debounce_timer: Timer?
@@ -25,7 +25,8 @@ class RecipeViewModel: ObservableObject {
         searchText.count >= 1
     }
     
-    init() {
+    init(networkManager: NetworkManager) {
+        self.networkManager = networkManager
         container = NSPersistentContainer(name: "RecipesContainer")
         container.loadPersistentStores { desc, error in
             if error != nil {
@@ -35,7 +36,8 @@ class RecipeViewModel: ObservableObject {
         fetchFavoriteRecipes()
     }
     
-    func recipeTapped() {
+    func recipeTapped(recipeId: Int) {
+        selectedRecipeId = recipeId
         recipeInfoIsPresented = true
     }
     
@@ -48,16 +50,38 @@ class RecipeViewModel: ObservableObject {
         debounce_timer?.invalidate()
         debounce_timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             Task {
-                await self.performSearchRequest()
+                let result = await self.networkManager.performSearchRequest(with: self.searchText)
+                switch result {
+                    case .success(let response):
+                        DispatchQueue.main.async { [weak self] in
+                            guard let self else { return }
+                            self.currentOffset = response.number
+                            self.recipes = response.results
+                        }
+                    case .failure(_):
+                        return
+                }
             }
         })
     }
     
     func onBottomOfListAppeared() {
-        if !searchText.isEmpty {
-            Task {
-                await pageRecipes()
+        guard !searchText.isEmpty else {
+            return
+        }
+        Task {
+            let result = await networkManager.performSearchRequest(with: searchText, offset: currentOffset)
+            switch result {
+                case .success(let response):
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        self.currentOffset += response.number
+                        self.recipes.append(contentsOf: response.results)
+                    }
+                case .failure(_):
+                    return
             }
+            
         }
     }
     
@@ -70,54 +94,8 @@ class RecipeViewModel: ObservableObject {
     }
 }
 
-//  MARK: - Network Requests
-extension RecipeViewModel {
-    private func performSearchRequest() async {
-        do {
-            let endpoint = RecipesEndpoint.searchRecipe(query: searchText, offset: 0)
-            let data = try await networkManager.fetchData(from: endpoint)
-            let decodedResponse = try JSONDecoder().decode(RecipeSearchResponse.self, from: data)
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.currentOffset = decodedResponse.number
-                self.recipes = decodedResponse.results
-            }
-        } catch {
-            //  TODO: Handle error
-        }
-    }
-    
-    private func pageRecipes() async {
-        do {
-            let endpoint = RecipesEndpoint.searchRecipe(query: searchText, offset: currentOffset)
-            let data = try await networkManager.fetchData(from: endpoint)
-            let decodedResponse = try JSONDecoder().decode(RecipeSearchResponse.self, from: data)
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.currentOffset += decodedResponse.number
-                self.recipes.append(contentsOf: decodedResponse.results)
-            }
-        } catch {
-            //  TODO: Handle error
-        }
-    }
-    
-    func fetchRecipeInfo(with recipeId: Int) async {
-        do {
-            let data = try await networkManager.fetchData(from: RecipesEndpoint.fetchRecipeInfo(recipeId: recipeId))
-            let decodedResponse = try JSONDecoder().decode(RecipeInfoResponse.self, from: data)
-            DispatchQueue.main.async { [weak self] in
-                guard let self else { return }
-                self.recipeInfo = decodedResponse
-            }
-        } catch {
-            //  TODO: Handle error
-        }
-    }
-}
-
 //  MARK: - CoreData
-extension RecipeViewModel {
+extension SearchViewModel {
     private func fetchFavoriteRecipes() {
         let reqeust = NSFetchRequest<RecipeEntity>(entityName: "RecipeEntity")
         

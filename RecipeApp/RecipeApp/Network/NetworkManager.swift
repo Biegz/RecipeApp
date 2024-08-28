@@ -15,7 +15,7 @@ enum NetworkError: Error {
 }
 
 class NetworkManager: ObservableObject {
-    private let apiKey = "836a5bafc09748fe802927c306f7e3ac"
+    private let apiKey = "023b3a11d64f49bd8ac6f6f70f134d9a"
     let baseUrl: String
     
     init(baseUrl: String) {
@@ -27,7 +27,7 @@ class NetworkManager: ObservableObject {
             throw NetworkError.failedToCreateURLComponents
         }
         urlComponents.queryItems = endpoint.qeuryItems
-        urlComponents.queryItems?.append(contentsOf: [URLQueryItem(name: "apiKey", value: apiKey)]) 
+        urlComponents.queryItems?.append(contentsOf: [URLQueryItem(name: "apiKey", value: apiKey)])
         
         guard let url = urlComponents.url else {
             throw NetworkError.failedToCreateURL
@@ -38,7 +38,7 @@ class NetworkManager: ObservableObject {
         return request
     }
     
-    func fetchData(from endpoint: APIEndpoint) async throws -> Data {
+    private func fetchData(from endpoint: APIEndpoint) async throws -> Data {
         let urlRequest = try makeURLRequest(endpoint: endpoint)
         let (data, response) = try await URLSession.shared.data(for: urlRequest)
         guard 
@@ -50,5 +50,28 @@ class NetworkManager: ObservableObject {
         }
         
         return data
+    }
+}
+
+extension NetworkManager {
+    func fetchRecipeInfo(from recipeId: Int) async -> Result<RecipeInfoResponse, Error> {
+            do {
+                let data = try await fetchData(from: RecipesEndpoint.fetchRecipeInfo(recipeId: recipeId))
+                let decodedResponse = try JSONDecoder().decode(RecipeInfoResponse.self, from: data)
+                return .success(decodedResponse)
+            } catch {
+                return .failure(error)
+            }
+    }
+    
+    func performSearchRequest(with searchText: String, offset: Int = 0) async -> Result<RecipeSearchResponse, Error> {
+        do {
+            let endpoint = RecipesEndpoint.searchRecipe(query: searchText, offset: offset)
+            let data = try await fetchData(from: endpoint)
+            let decodedResponse = try JSONDecoder().decode(RecipeSearchResponse.self, from: data)
+            return .success(decodedResponse)
+        } catch {
+            return .failure(error)
+        }
     }
 }

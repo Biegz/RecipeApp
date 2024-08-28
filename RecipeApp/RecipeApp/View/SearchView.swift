@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SearchView: View {
-    @EnvironmentObject var viewModel: RecipeViewModel
+    @ObservedObject var viewModel: SearchViewModel
     
     var body: some View {
         NavigationStack {
@@ -19,27 +19,34 @@ struct SearchView: View {
                     .cornerRadius(4.0)
                 
                 List(viewModel.recipes, id: \.id) { recipe in
-                    NavigationLink(value: recipe.id) {
-                        HStack {
-                            Text(recipe.title)
-                            Spacer()
-                            makeFavoriteImage(from: recipe)
+                    HStack {
+                        Text(recipe.title)
+                        Spacer()
+                        makeFavoriteImage(from: recipe)
+                    }
+                    .onTapGesture {
+                        viewModel.recipeTapped(recipeId: recipe.id)
+                    }
+                    .onAppear {
+                        if recipe.id == viewModel.recipes.last?.id {
+                            viewModel.onBottomOfListAppeared()
                         }
                     }
-                        .onAppear {
-                            if recipe.id == viewModel.recipes.last?.id {
-                                viewModel.onBottomOfListAppeared()
-                            }
-                        }
                 }
                 .listStyle(.plain)
 
             }
             .navigationTitle("Search")
-            .navigationDestination(for: Int.self) { recipeId in
-                RecipeDetailView(recipeId: recipeId)
-                    .environmentObject(viewModel)
-            }
+            .navigationDestination(isPresented: $viewModel.recipeInfoIsPresented, destination: {
+                if let recipeId = viewModel.selectedRecipeId {
+                    RecipeDetailView(
+                        viewModel: RecipeDetailViewModel(
+                            networkManager: viewModel.networkManager,
+                            recipeId: recipeId
+                        )
+                    )
+                }
+            })
             .onChange(of: viewModel.searchText, { _, _ in
                 viewModel.searchTermUpdated()
             })
@@ -59,5 +66,9 @@ struct SearchView: View {
 }
 
 #Preview {
-    SearchView()
+    SearchView(
+        viewModel: SearchViewModel(
+            networkManager: NetworkManager(baseUrl: "")
+        )
+    )
 }

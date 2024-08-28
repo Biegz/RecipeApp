@@ -17,10 +17,11 @@
 		CEA21FE02C7ED4CC004E38F3 /* RecipesEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FDF2C7ED4CC004E38F3 /* RecipesEndpoint.swift */; };
 		CEA21FE32C7ED8D2004E38F3 /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */; };
 		CEA21FE62C7EDB3B004E38F3 /* RecipeSearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE52C7EDB3B004E38F3 /* RecipeSearchResponse.swift */; };
-		CEA21FE82C7EDB53004E38F3 /* RecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE72C7EDB53004E38F3 /* RecipeViewModel.swift */; };
+		CEA21FE82C7EDB53004E38F3 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */; };
 		CEA21FEA2C7EEE2D004E38F3 /* RecipeInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FE92C7EEE2D004E38F3 /* RecipeInfoResponse.swift */; };
 		CEA21FF12C7FBCA9004E38F3 /* RecipesContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FEF2C7FBCA9004E38F3 /* RecipesContainer.xcdatamodeld */; };
 		CEA21FF32C7FBE5B004E38F3 /* FavoriteRecipesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FF22C7FBE5B004E38F3 /* FavoriteRecipesViewModel.swift */; };
+		CEA21FF52C7FDEAD004E38F3 /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FF42C7FDEAD004E38F3 /* RecipeDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,10 +36,11 @@
 		CEA21FDF2C7ED4CC004E38F3 /* RecipesEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesEndpoint.swift; sourceTree = "<group>"; };
 		CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		CEA21FE52C7EDB3B004E38F3 /* RecipeSearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchResponse.swift; sourceTree = "<group>"; };
-		CEA21FE72C7EDB53004E38F3 /* RecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewModel.swift; sourceTree = "<group>"; };
+		CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		CEA21FE92C7EEE2D004E38F3 /* RecipeInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoResponse.swift; sourceTree = "<group>"; };
 		CEA21FF02C7FBCA9004E38F3 /* RecipesContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecipesContainer.xcdatamodel; sourceTree = "<group>"; };
 		CEA21FF22C7FBE5B004E38F3 /* FavoriteRecipesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRecipesViewModel.swift; sourceTree = "<group>"; };
+		CEA21FF42C7FDEAD004E38F3 /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,8 +133,9 @@
 		CEA21FEE2C7F9BEB004E38F3 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				CEA21FE72C7EDB53004E38F3 /* RecipeViewModel.swift */,
+				CEA21FE72C7EDB53004E38F3 /* SearchViewModel.swift */,
 				CEA21FF22C7FBE5B004E38F3 /* FavoriteRecipesViewModel.swift */,
+				CEA21FF42C7FDEAD004E38F3 /* RecipeDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEA21FE32C7ED8D2004E38F3 /* RecipeDetailView.swift in Sources */,
+				CEA21FF52C7FDEAD004E38F3 /* RecipeDetailViewModel.swift in Sources */,
 				CEA21FE02C7ED4CC004E38F3 /* RecipesEndpoint.swift in Sources */,
 				CEA21FE62C7EDB3B004E38F3 /* RecipeSearchResponse.swift in Sources */,
 				CEA21FDB2C7ECF36004E38F3 /* NetworkManager.swift in Sources */,
@@ -215,7 +219,7 @@
 				CEA21FEA2C7EEE2D004E38F3 /* RecipeInfoResponse.swift in Sources */,
 				CEA21FC92C7ECCC3004E38F3 /* SearchView.swift in Sources */,
 				CEA21FC72C7ECCC3004E38F3 /* RecipeApp.swift in Sources */,
-				CEA21FE82C7EDB53004E38F3 /* RecipeViewModel.swift in Sources */,
+				CEA21FE82C7EDB53004E38F3 /* SearchViewModel.swift in Sources */,
 				CEA21FF12C7FBCA9004E38F3 /* RecipesContainer.xcdatamodeld in Sources */,
 				CEA21FD92C7ECEA1004E38F3 /* FavoritesView.swift in Sources */,
 				CEA21FDE2C7ED4AE004E38F3 /* Endpoint.swift in Sources */,

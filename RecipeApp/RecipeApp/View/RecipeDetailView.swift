@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
-    @EnvironmentObject var viewModel: RecipeViewModel
-    let recipeId: Int
+    @ObservedObject var viewModel: RecipeDetailViewModel
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24.0) {
                 HStack {
-                    Text(viewModel.recipeInfo?.title ?? "Recipe Title")
+                    Text(viewModel.recipeInfo?.title ?? "")
                         .font(.headline)
                     Spacer()
                     image
@@ -30,17 +29,10 @@ struct RecipeDetailView: View {
             .padding()
         }
         .navigationTitle("Recipe Info")
-        .task {
-            await viewModel.fetchRecipeInfo(with: recipeId)
-        }
-    }
-    
-    private var title: some View {
-        Text(viewModel.recipeInfo?.title ?? "Recipe Title")
     }
     
     private var image: some View {
-        AsyncImage(url: viewModel.recipeInfo?.image) { img in
+        AsyncImage(url: URL(string: viewModel.recipeInfo?.image ?? "")) { img in
             img
                 .resizable()
                 .scaledToFit()
@@ -77,5 +69,11 @@ struct RecipeDetailView: View {
 }
 
 #Preview {
-    RecipeDetailView(recipeId: 0)
+    RecipeDetailView(
+        viewModel: RecipeDetailViewModel(
+            networkManager: NetworkManager(
+                baseUrl: ""),
+            recipeId: 0
+        )
+    )
 }

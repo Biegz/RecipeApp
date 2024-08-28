@@ -9,11 +9,14 @@ import SwiftUI
 
 @main
 struct RecipeApp: App {
+    let networkManager: NetworkManager = NetworkManager(baseUrl: "https://api.spoonacular.com")
+    
     var body: some Scene {
         WindowGroup {
             TabView {
-                SearchView()
-                    .environmentObject(RecipeViewModel())
+                SearchView(
+                    viewModel: SearchViewModel(networkManager: networkManager)
+                )
                     .tabItem {
                         VStack {
                             Image(systemName: "magnifyingglass")

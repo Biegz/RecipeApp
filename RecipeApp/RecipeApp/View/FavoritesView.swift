@@ -6,16 +6,47 @@
 //
 
 import SwiftUI
+import CoreData
 
 class FavoritesViewModel: ObservableObject {
+    let container: NSPersistentContainer
+    @Published var favoriteRecipes: [RecipeEntity] = []
     
+    init() {
+        container = NSPersistentContainer(name: "RecipesContainer")
+        container.loadPersistentStores { desc, error in
+            if error != nil {
+               //   TODO: Handle error
+            }
+        }
+        fetchFavoriteRecipes()
+    }
+    
+    private func fetchFavoriteRecipes() {
+        let reqeust = NSFetchRequest<RecipeEntity>(entityName: "RecipeEntity")
+        
+        do {
+            favoriteRecipes = try container.viewContext.fetch(reqeust)
+        } catch {
+            //  TODO: Handle error
+        }
+    }
 }
 
 struct FavoritesView: View {
     @ObservedObject var viewModel: FavoritesViewModel = FavoritesViewModel()
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List(viewModel.favoriteRecipes, id: \.id) { recipe in
+                if let title = recipe.title {
+                    NavigationLink(title, value: recipe.id)
+                }
+            }
+            .listStyle(.plain)
+            .navigationTitle("Favorites")
+            .padding()
+        }
     }
 }
 
