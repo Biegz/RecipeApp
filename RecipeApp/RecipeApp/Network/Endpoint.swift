@@ -15,4 +15,5 @@ enum HTTPMethod: String {
 protocol APIEndpoint {
     var path: String { get }
     var httpMethod: HTTPMethod { get }
+    var qeuryItems: [URLQueryItem] { get }
 }

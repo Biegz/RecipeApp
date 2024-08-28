@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct RecipeApp: App {
-    let networkManager: NetworkManager = .init(baseUrl: "https://api.spoonacular.com")
     var body: some Scene {
         WindowGroup {
             TabView {
-                SearchView(viewModel: SearchViewModel(networkManager: networkManager))
+                SearchView()
+                    .environmentObject(RecipeViewModel())
                     .tabItem {
                         VStack {
                             Image(systemName: "magnifyingglass")
@@ -21,7 +21,7 @@ struct RecipeApp: App {
                         }
                     }
                 
-                FavoritesView(viewModel: FavoritesViewModel())
+                FavoritesView()
                     .tabItem {
                         VStack {
                             Image(systemName: "star")

@@ -12,7 +12,7 @@ class FavoritesViewModel: ObservableObject {
 }
 
 struct FavoritesView: View {
-    @ObservedObject var viewModel: FavoritesViewModel
+    @ObservedObject var viewModel: FavoritesViewModel = FavoritesViewModel()
     
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)

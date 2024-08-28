@@ -8,6 +8,7 @@
 import Foundation
 
 struct RecipeSearchResponse: Decodable {
+    let number: Int
     let results: [Recipe]
 }
 
