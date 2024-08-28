@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct RecipeApp: App {
+    let networkManager: NetworkManager = .init(baseUrl: "https://api.spoonacular.com")
     var body: some Scene {
         WindowGroup {
             TabView {
