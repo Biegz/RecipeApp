@@ -29,7 +29,7 @@ struct SearchView: View {
                     }
                     .onAppear {
                         if recipe.id == viewModel.recipes.last?.id {
-                            viewModel.onBottomOfListAppeared()
+                            viewModel.bottomOfListAppeared()
                         }
                     }
                 }
@@ -60,7 +60,7 @@ struct SearchView: View {
             .scaledToFit()
             .frame(width: 25)
             .onTapGesture {
-                viewModel.onFavoriteButtonTapped(recipe)
+                viewModel.favoriteButtonTapped(recipe)
             }
     }
 }

@@ -10,16 +10,14 @@ import CoreData
 
 class SearchViewModel: ObservableObject {
     let networkManager: NetworkManager
-    let container: NSPersistentContainer
     
     @Published var selectedRecipeId: Int?
     @Published var recipeInfoIsPresented: Bool = false
     @Published var searchText: String = ""
     @Published var recipes: [Recipe] = []
-    var currentOffset: Int = 0
-    
-    private var debounce_timer: Timer?
     @Published var favoriteRecipes: [RecipeEntity] = []
+    var currentOffset: Int = 0
+    private var debounce_timer: Timer?
     
     private var shouldExecuteSearchRequest: Bool {
         searchText.count >= 1
@@ -27,13 +25,7 @@ class SearchViewModel: ObservableObject {
     
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
-        container = NSPersistentContainer(name: "RecipesContainer")
-        container.loadPersistentStores { desc, error in
-            if error != nil {
-               //   TODO: Handle error
-            }
-        }
-        fetchFavoriteRecipes()
+        fetchFavoriteRecipesFromLocalDataStore()
     }
     
     func recipeTapped(recipeId: Int) {
@@ -65,7 +57,7 @@ class SearchViewModel: ObservableObject {
         })
     }
     
-    func onBottomOfListAppeared() {
+    func bottomOfListAppeared() {
         guard !searchText.isEmpty else {
             return
         }
@@ -85,55 +77,54 @@ class SearchViewModel: ObservableObject {
         }
     }
     
-    func onFavoriteButtonTapped(_ recipe: Recipe) {
+    func favoriteButtonTapped(_ recipe: Recipe) {
         if recipeIsAlreadySaved(recipe) {
-            deleteRecipe(with: recipe)
+            deleteRecipeFromLocalDataStore(recipe: recipe)
         } else {
-            saveRecipe(with: recipe)
+            saveRecipeToLocalDataStore(recipe: recipe)
         }
     }
 }
 
-//  MARK: - CoreData
+//  MARK: - Private
 extension SearchViewModel {
-    private func fetchFavoriteRecipes() {
-        let reqeust = NSFetchRequest<RecipeEntity>(entityName: "RecipeEntity")
-        
-        do {
-            favoriteRecipes = try container.viewContext.fetch(reqeust)
-        } catch {
-            //  TODO: Handle error
+    private func fetchFavoriteRecipesFromLocalDataStore() {
+        let result = CoreDataManager.shared.fetchFavoriteRecipes()
+        switch result {
+            case .success(let recipes):
+                favoriteRecipes = recipes
+            case .failure(_):
+                return  // TODO: Handle error
         }
     }
     
-    private func saveRecipe(with recipe: Recipe) {
-        let newRecipeEntity = RecipeEntity(context: container.viewContext)
-        newRecipeEntity.id = Int64(recipe.id)
-        newRecipeEntity.image = recipe.image?.absoluteString
-        newRecipeEntity.title = recipe.title
-        do {
-            try container.viewContext.save()
-            fetchFavoriteRecipes()
-        } catch {
-            print("here")
-            //  TODO: Handle error
-        }
-    }
-    
-    private func deleteRecipe(with recipe: Recipe) {
-        let fetchRequest: NSFetchRequest<RecipeEntity> = NSFetchRequest(entityName: "RecipeEntity")
-        fetchRequest.predicate = NSPredicate(format: "id == %d", recipe.id)
-        
-        do {
-            let results = try container.viewContext.fetch(fetchRequest)
-            if let recipeToDelete = results.first {
-                container.viewContext.delete(recipeToDelete)
-                try container.viewContext.save()
-                self.favoriteRecipes.removeAll(where: { $0.id == Int64(recipe.id) })
+    private func saveRecipeToLocalDataStore(recipe: Recipe) {
+        Task {
+            let result = await networkManager.fetchRecipeInfo(from: recipe.id)
+            switch result {
+                case .success(let recipeInfo):
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self else { return }
+                        do {
+                            try CoreDataManager.shared.saveRecipe(with: recipe, recipeInfo: recipeInfo)
+                        } catch {
+                            //  TODO: Handle error
+                        }
+                        fetchFavoriteRecipesFromLocalDataStore()
+                    }
+                case .failure(_):
+                    return
+                    //  TODO: Handle error
             }
+        }
+    }
+    
+    private func deleteRecipeFromLocalDataStore(recipe: Recipe) {
+        do {
+            try CoreDataManager.shared.deleteRecipe(with: recipe.id)
+            self.favoriteRecipes.removeAll(where: { $0.id == Int64(recipe.id) })
         } catch {
-            print("here")
-            // TODO: Handle error
+            //  TODO: Handle error
         }
     }
 }

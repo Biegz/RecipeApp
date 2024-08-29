@@ -6,50 +6,46 @@
 //
 
 import SwiftUI
-import CoreData
-
-class FavoritesViewModel: ObservableObject {
-    let container: NSPersistentContainer
-    @Published var favoriteRecipes: [RecipeEntity] = []
-    
-    init() {
-        container = NSPersistentContainer(name: "RecipesContainer")
-        container.loadPersistentStores { desc, error in
-            if error != nil {
-               //   TODO: Handle error
-            }
-        }
-        fetchFavoriteRecipes()
-    }
-    
-    private func fetchFavoriteRecipes() {
-        let reqeust = NSFetchRequest<RecipeEntity>(entityName: "RecipeEntity")
-        
-        do {
-            favoriteRecipes = try container.viewContext.fetch(reqeust)
-        } catch {
-            //  TODO: Handle error
-        }
-    }
-}
 
 struct FavoritesView: View {
-    @ObservedObject var viewModel: FavoritesViewModel = FavoritesViewModel()
+    @ObservedObject var viewModel: FavoritesViewModel
     
     var body: some View {
         NavigationStack {
             List(viewModel.favoriteRecipes, id: \.id) { recipe in
                 if let title = recipe.title {
-                    NavigationLink(title, value: recipe.id)
+                    Text(title)
+                        .onTapGesture {
+                            viewModel.recipeTapped(recipeId: recipe.id)
+                        }
+                        .swipeActions {
+                            Button("Delete", role: .destructive) {
+                                viewModel.confirmRecipeDeletion(recipeId: recipe.id)
+                            }
+                        }
                 }
+
             }
             .listStyle(.plain)
             .navigationTitle("Favorites")
+            .onAppear {
+                viewModel.onAppear()
+            }
+            .navigationDestination(isPresented: $viewModel.recipeInfoIsPresented, destination: {
+                if let recipeId = viewModel.selectedRecipeId {
+                    RecipeDetailView(
+                        viewModel: RecipeDetailViewModel(
+                            networkManager: viewModel.networkManager,
+                            recipeId: recipeId
+                        )
+                    )
+                }
+            })
             .padding()
         }
     }
 }
 
 #Preview {
-    FavoritesView(viewModel: FavoritesViewModel())
+    FavoritesView(viewModel: FavoritesViewModel(networkManager: NetworkManager(baseUrl: "")))
 }

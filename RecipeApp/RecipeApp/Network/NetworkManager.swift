@@ -14,7 +14,7 @@ enum NetworkError: Error {
     case failedToRetrieveResponseData
 }
 
-class NetworkManager: ObservableObject {
+class NetworkManager {
     private let apiKey = "023b3a11d64f49bd8ac6f6f70f134d9a"
     let baseUrl: String
     

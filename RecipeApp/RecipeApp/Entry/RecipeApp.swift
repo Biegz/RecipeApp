@@ -24,7 +24,9 @@ struct RecipeApp: App {
                         }
                     }
                 
-                FavoritesView()
+                FavoritesView(
+                    viewModel: FavoritesViewModel(networkManager: networkManager)
+                )
                     .tabItem {
                         VStack {
                             Image(systemName: "star")
