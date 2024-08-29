@@ -11,10 +11,10 @@ import SwiftUI
 struct RecipeApp: App {
     //  Live Services
     let coreDataManager: CoreDataManager = CoreDataManager()
-    //let networkManager: NetworkManagerProtocol = NetworkManager(baseUrl: "https://api.spoonacular.com")
+    let networkManager: NetworkManagerProtocol = NetworkManager(baseUrl: "https://api.spoonacular.com")
     
     //  Mock Services
-    let networkManager: NetworkManagerProtocol = MockNetworkManager()
+    //let networkManager: NetworkManagerProtocol = MockNetworkManager()
     
     var body: some Scene {
         WindowGroup {

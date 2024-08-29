@@ -21,7 +21,7 @@ protocol NetworkManagerProtocol {
 }
 
 class NetworkManager {
-    private let apiKey = "023b3a11d64f49bd8ac6f6f70f134d9a"
+    private let apiKey = "dba33a7a8bb54fc4a81388625efeb06c"
     let baseUrl: String
     
     init(baseUrl: String) {

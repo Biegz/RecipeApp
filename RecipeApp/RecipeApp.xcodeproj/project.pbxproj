@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE552FD42C80EBDD0049F17D /* SearchCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE552FD32C80EBDD0049F17D /* SearchCard.swift */; };
 		CEA21FC72C7ECCC3004E38F3 /* RecipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FC62C7ECCC3004E38F3 /* RecipeApp.swift */; };
 		CEA21FC92C7ECCC3004E38F3 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FC82C7ECCC3004E38F3 /* SearchView.swift */; };
 		CEA21FCB2C7ECCC4004E38F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEA21FCA2C7ECCC4004E38F3 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE552FD32C80EBDD0049F17D /* SearchCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCard.swift; sourceTree = "<group>"; };
 		CEA21FC32C7ECCC3004E38F3 /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEA21FC62C7ECCC3004E38F3 /* RecipeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeApp.swift; sourceTree = "<group>"; };
 		CEA21FC82C7ECCC3004E38F3 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				CEA21FD82C7ECEA1004E38F3 /* FavoritesView.swift */,
 				CEA21FE22C7ED8D2004E38F3 /* RecipeDetailView.swift */,
 				CEA21FC82C7ECCC3004E38F3 /* SearchView.swift */,
+				CE552FD32C80EBDD0049F17D /* SearchCard.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				CEA21FC72C7ECCC3004E38F3 /* RecipeApp.swift in Sources */,
 				CEA21FE82C7EDB53004E38F3 /* SearchViewModel.swift in Sources */,
 				CEA21FF12C7FBCA9004E38F3 /* RecipesContainer.xcdatamodeld in Sources */,
+				CE552FD42C80EBDD0049F17D /* SearchCard.swift in Sources */,
 				CEA21FD92C7ECEA1004E38F3 /* FavoritesView.swift in Sources */,
 				CEA21FFA2C7FF219004E38F3 /* CoreDataManager.swift in Sources */,
 				CEA21FDE2C7ED4AE004E38F3 /* Endpoint.swift in Sources */,

@@ -24,9 +24,10 @@ class SearchViewModel: ObservableObject {
         searchText.count >= 1
     }
     
-    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManager) {
+    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManager, searchText: String = "") {
         self.networkManager = networkManager
         self.coreDataManager = coreDataManager
+        self.searchText = searchText
         fetchFavoriteRecipesFromLocalDataStore()
     }
     
@@ -85,6 +86,18 @@ class SearchViewModel: ObservableObject {
         } else {
             saveRecipeToLocalDataStore(recipe: recipe)
         }
+    }
+    
+    func makeSearchCardViewModel(from recipe: Recipe) -> SearchCardViewModel {
+        let vm = SearchCardViewModel(recipe: recipe, recipeIsSaved: recipeIsAlreadySaved(recipe))
+        vm.delegete = self
+        return vm
+    }
+}
+
+extension SearchViewModel: SearchCardViewModelProtocol {
+    func onFavoriteButtonTapped(_ recipe: Recipe) {
+        favoriteButtonTapped(recipe)
     }
 }
 

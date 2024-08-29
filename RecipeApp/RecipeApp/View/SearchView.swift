@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+fileprivate enum UIConstants {
+    static let sidePadding: CGFloat = 12.0
+}
+
 struct SearchView: View {
     @ObservedObject var viewModel: SearchViewModel
     
@@ -18,23 +22,23 @@ struct SearchView: View {
                     .background(Color.gray.opacity(0.25))
                     .cornerRadius(4.0)
                 
-                List(viewModel.recipes, id: \.id) { recipe in
-                    HStack {
-                        Text(recipe.title)
-                        Spacer()
-                        makeFavoriteImage(from: recipe)
-                    }
-                    .onTapGesture {
-                        viewModel.recipeTapped(recipeId: recipe.id)
-                    }
-                    .onAppear {
-                        if recipe.id == viewModel.recipes.last?.id {
-                            viewModel.bottomOfListAppeared()
+                ScrollView {
+                    LazyVStack {
+                        ForEach(viewModel.recipes, id: \.id) { recipe in
+                            SearchCard(
+                                viewModel: viewModel.makeSearchCardViewModel(from: recipe)
+                            )
+                            .onTapGesture {
+                                viewModel.recipeTapped(recipeId: recipe.id)
+                            }
+                            .onAppear {
+                                if recipe.id == viewModel.recipes.last?.id {
+                                    viewModel.bottomOfListAppeared()
+                                }
+                            }
                         }
                     }
                 }
-                .listStyle(.plain)
-
             }
             .navigationTitle("Search")
             .navigationDestination(isPresented: $viewModel.recipeInfoIsPresented, destination: {
@@ -51,18 +55,8 @@ struct SearchView: View {
             .onChange(of: viewModel.searchText, { _, _ in
                 viewModel.searchTermUpdated()
             })
-            .padding()
+            .padding(.horizontal, UIConstants.sidePadding)
         }
-    }
-    
-    private func makeFavoriteImage(from recipe: Recipe) -> some View {
-        Image(systemName: viewModel.recipeIsAlreadySaved(recipe) ? "star.fill" : "star")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 25)
-            .onTapGesture {
-                viewModel.favoriteButtonTapped(recipe)
-            }
     }
 }
 
@@ -70,7 +64,8 @@ struct SearchView: View {
     SearchView(
         viewModel: SearchViewModel(
             networkManager: MockNetworkManager(),
-            coreDataManager: CoreDataManager()
+            coreDataManager: CoreDataManager(),
+            searchText: "Pizz"
         )
     )
 }

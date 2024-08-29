@@ -65,7 +65,6 @@ struct RecipeDetailView: View {
             Text(instructions)
         }
     }
-    
 }
 
 #Preview {
