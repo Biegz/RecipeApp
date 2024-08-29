@@ -4,12 +4,13 @@
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="recipeInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeInfoEntity"/>
+        <relationship name="recipeInfo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeInfoEntity" inverseName="recipe" inverseEntity="RecipeInfoEntity"/>
     </entity>
     <entity name="RecipeInfoEntity" representedClassName="RecipeInfoEntity" syncable="YES" codeGenerationType="class">
         <attribute name="cookingMinutes" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="image" optional="YES" attributeType="String"/>
         <attribute name="instructions" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecipeEntity" inverseName="recipeInfo" inverseEntity="RecipeEntity"/>
     </entity>
 </model>

@@ -12,6 +12,12 @@ enum NetworkError: Error {
     case failedToCreateURL
     case invalidResponse
     case failedToRetrieveResponseData
+    case emptyResponse
+}
+
+protocol NetworkManagerProtocol {
+    func fetchRecipeInfo(from recipeId: Int) async -> Result<RecipeInfoResponse, Error>
+    func performSearchRequest(with searchText: String, offset: Int) async -> Result<RecipeSearchResponse, Error>
 }
 
 class NetworkManager {
@@ -53,7 +59,7 @@ class NetworkManager {
     }
 }
 
-extension NetworkManager {
+extension NetworkManager: NetworkManagerProtocol {
     func fetchRecipeInfo(from recipeId: Int) async -> Result<RecipeInfoResponse, Error> {
             do {
                 let data = try await fetchData(from: RecipesEndpoint.fetchRecipeInfo(recipeId: recipeId))
@@ -64,7 +70,7 @@ extension NetworkManager {
             }
     }
     
-    func performSearchRequest(with searchText: String, offset: Int = 0) async -> Result<RecipeSearchResponse, Error> {
+    func performSearchRequest(with searchText: String, offset: Int) async -> Result<RecipeSearchResponse, Error> {
         do {
             let endpoint = RecipesEndpoint.searchRecipe(query: searchText, offset: offset)
             let data = try await fetchData(from: endpoint)
@@ -73,5 +79,28 @@ extension NetworkManager {
         } catch {
             return .failure(error)
         }
+    }
+}
+
+class MockNetworkManager: NetworkManagerProtocol {
+    let mockRecipeInfo: [Int: RecipeInfoResponse] = [
+        0: .mockPizzaRecipe,
+        1: .mockPizzaBagelRecipe
+    ]
+    
+    func fetchRecipeInfo(from recipeId: Int) async -> Result<RecipeInfoResponse, Error> {
+        guard let foundRecipInfo = mockRecipeInfo[recipeId] else {
+            return .failure(NetworkError.emptyResponse)
+        }
+        return .success(foundRecipInfo)
+    }
+    
+    func performSearchRequest(with searchText: String, offset: Int) async -> Result<RecipeSearchResponse, Error> {
+        let mockSearchResults: RecipeSearchResponse = .mock
+        
+        guard mockSearchResults.results.contains(where: { $0.title.contains(searchText) }), offset < mockSearchResults.number else {
+            return .failure(NetworkError.emptyResponse)
+        }
+        return .success(mockSearchResults)
     }
 }

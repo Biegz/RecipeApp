@@ -71,8 +71,8 @@ struct RecipeDetailView: View {
 #Preview {
     RecipeDetailView(
         viewModel: RecipeDetailViewModel(
-            networkManager: NetworkManager(
-                baseUrl: ""),
+            networkManager: MockNetworkManager(),
+            coreDataManager: CoreDataManager(),
             recipeId: 0
         )
     )

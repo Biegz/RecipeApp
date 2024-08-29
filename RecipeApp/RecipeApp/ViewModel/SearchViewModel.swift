@@ -9,22 +9,24 @@ import SwiftUI
 import CoreData
 
 class SearchViewModel: ObservableObject {
-    let networkManager: NetworkManager
+    let networkManager: NetworkManagerProtocol
+    let coreDataManager: CoreDataManager
     
-    @Published var selectedRecipeId: Int?
     @Published var recipeInfoIsPresented: Bool = false
     @Published var searchText: String = ""
-    @Published var recipes: [Recipe] = []
-    @Published var favoriteRecipes: [RecipeEntity] = []
-    var currentOffset: Int = 0
-    private var debounce_timer: Timer?
+    @Published private(set) var selectedRecipeId: Int?
+    @Published private(set) var recipes: [Recipe] = []
+    @Published private(set) var favoriteRecipes: [RecipeEntity] = []
+    private(set) var currentOffset: Int = 0
+    private(set) var debounce_timer: Timer?
     
     private var shouldExecuteSearchRequest: Bool {
         searchText.count >= 1
     }
     
-    init(networkManager: NetworkManager) {
+    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManager) {
         self.networkManager = networkManager
+        self.coreDataManager = coreDataManager
         fetchFavoriteRecipesFromLocalDataStore()
     }
     
@@ -42,7 +44,7 @@ class SearchViewModel: ObservableObject {
         debounce_timer?.invalidate()
         debounce_timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { _ in
             Task {
-                let result = await self.networkManager.performSearchRequest(with: self.searchText)
+                let result = await self.networkManager.performSearchRequest(with: self.searchText, offset: 0)
                 switch result {
                     case .success(let response):
                         DispatchQueue.main.async { [weak self] in
@@ -89,7 +91,7 @@ class SearchViewModel: ObservableObject {
 //  MARK: - Private
 extension SearchViewModel {
     private func fetchFavoriteRecipesFromLocalDataStore() {
-        let result = CoreDataManager.shared.fetchFavoriteRecipes()
+        let result = coreDataManager.fetchFavoriteRecipes()
         switch result {
             case .success(let recipes):
                 favoriteRecipes = recipes
@@ -106,7 +108,7 @@ extension SearchViewModel {
                     DispatchQueue.main.async { [weak self] in
                         guard let self else { return }
                         do {
-                            try CoreDataManager.shared.saveRecipe(with: recipe, recipeInfo: recipeInfo)
+                            try coreDataManager.saveRecipe(with: recipe, recipeInfo: recipeInfo)
                         } catch {
                             //  TODO: Handle error
                         }
@@ -121,7 +123,7 @@ extension SearchViewModel {
     
     private func deleteRecipeFromLocalDataStore(recipe: Recipe) {
         do {
-            try CoreDataManager.shared.deleteRecipe(with: recipe.id)
+            try coreDataManager.deleteRecipe(with: recipe.id)
             self.favoriteRecipes.removeAll(where: { $0.id == Int64(recipe.id) })
         } catch {
             //  TODO: Handle error

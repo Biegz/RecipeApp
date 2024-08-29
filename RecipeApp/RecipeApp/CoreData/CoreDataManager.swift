@@ -14,7 +14,6 @@ enum CoreDataError: Error {
 }
 
 class CoreDataManager {
-    static let shared = CoreDataManager()
     let container: NSPersistentContainer
 
     init() {

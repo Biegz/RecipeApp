@@ -9,31 +9,64 @@ import SwiftUI
 
 @main
 struct RecipeApp: App {
-    let networkManager: NetworkManager = NetworkManager(baseUrl: "https://api.spoonacular.com")
+    //  Live Services
+    let coreDataManager: CoreDataManager = CoreDataManager()
+    //let networkManager: NetworkManagerProtocol = NetworkManager(baseUrl: "https://api.spoonacular.com")
+    
+    //  Mock Services
+    let networkManager: NetworkManagerProtocol = MockNetworkManager()
     
     var body: some Scene {
         WindowGroup {
             TabView {
                 SearchView(
-                    viewModel: SearchViewModel(networkManager: networkManager)
+                    viewModel: SearchViewModel(
+                        networkManager: networkManager,
+                        coreDataManager: coreDataManager
+                    )
                 )
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "magnifyingglass")
-                            Text("Search")
-                        }
-                    }
+                .tabItem {
+                    Image(systemName: "magnifyingglass")
+                    Text("Search")
+                }
                 
                 FavoritesView(
-                    viewModel: FavoritesViewModel(networkManager: networkManager)
+                    viewModel: FavoritesViewModel(
+                        networkManager: networkManager,
+                        coreDataManager: coreDataManager
+                    )
                 )
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "star")
-                            Text("Favorites")
-                        }
-                    }
+                .tabItem {
+                    Image(systemName: "star")
+                    Text("Favorites")
+                }
             }
+        }
+    }
+}
+
+#Preview {
+    TabView {
+        SearchView(
+            viewModel: SearchViewModel(
+                networkManager: MockNetworkManager(),
+                coreDataManager: CoreDataManager()
+            )
+        )
+        .tabItem {
+            Image(systemName: "magnifyingglass")
+            Text("Search")
+        }
+        
+        FavoritesView(
+            viewModel: FavoritesViewModel(
+                networkManager: MockNetworkManager(),
+                coreDataManager: CoreDataManager()
+            )
+        )
+        .tabItem {
+            Image(systemName: "star")
+            Text("Favorites")
         }
     }
 }

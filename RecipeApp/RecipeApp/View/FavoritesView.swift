@@ -36,6 +36,7 @@ struct FavoritesView: View {
                     RecipeDetailView(
                         viewModel: RecipeDetailViewModel(
                             networkManager: viewModel.networkManager,
+                            coreDataManager: viewModel.coreDataManager,
                             recipeId: recipeId
                         )
                     )
@@ -47,5 +48,10 @@ struct FavoritesView: View {
 }
 
 #Preview {
-    FavoritesView(viewModel: FavoritesViewModel(networkManager: NetworkManager(baseUrl: "")))
+    FavoritesView(
+        viewModel: FavoritesViewModel(
+            networkManager: MockNetworkManager(),
+            coreDataManager: CoreDataManager()
+        )
+    )
 }

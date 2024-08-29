@@ -23,7 +23,18 @@
 		CEA21FF52C7FDEAD004E38F3 /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FF42C7FDEAD004E38F3 /* RecipeDetailViewModel.swift */; };
 		CEA21FF72C7FF175004E38F3 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FF62C7FF175004E38F3 /* FavoritesViewModel.swift */; };
 		CEA21FFA2C7FF219004E38F3 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA21FF92C7FF219004E38F3 /* CoreDataManager.swift */; };
+		CEA220052C802B76004E38F3 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA220042C802B76004E38F3 /* SearchViewModelTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEA220062C802B76004E38F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEA21FBB2C7ECCC3004E38F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEA21FC22C7ECCC3004E38F3;
+			remoteInfo = RecipeApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CEA21FC32C7ECCC3004E38F3 /* RecipeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,10 +54,19 @@
 		CEA21FF42C7FDEAD004E38F3 /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		CEA21FF62C7FF175004E38F3 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 		CEA21FF92C7FF219004E38F3 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		CEA220022C802B76004E38F3 /* RecipeAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecipeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEA220042C802B76004E38F3 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		CEA21FC02C7ECCC3004E38F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEA21FFF2C802B76004E38F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -60,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				CEA21FC52C7ECCC3004E38F3 /* RecipeApp */,
+				CEA220032C802B76004E38F3 /* RecipeAppTests */,
 				CEA21FC42C7ECCC3004E38F3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				CEA21FC32C7ECCC3004E38F3 /* RecipeApp.app */,
+				CEA220022C802B76004E38F3 /* RecipeAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -75,11 +97,11 @@
 		CEA21FC52C7ECCC3004E38F3 /* RecipeApp */ = {
 			isa = PBXGroup;
 			children = (
+				CEA21FD52C7ECE27004E38F3 /* Network */,
 				CEA21FF82C7FF205004E38F3 /* CoreData */,
 				CEA21FEE2C7F9BEB004E38F3 /* ViewModel */,
 				CEA21FED2C7F9BE0004E38F3 /* View */,
 				CEA21FE42C7EDB29004E38F3 /* Model */,
-				CEA21FD52C7ECE27004E38F3 /* Network */,
 				CEA21FD42C7ECE1E004E38F3 /* Entry */,
 				CEA21FCA2C7ECCC4004E38F3 /* Assets.xcassets */,
 				CEA21FCC2C7ECCC4004E38F3 /* Preview Content */,
@@ -151,6 +173,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		CEA220032C802B76004E38F3 /* RecipeAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				CEA220042C802B76004E38F3 /* SearchViewModelTests.swift */,
+			);
+			path = RecipeAppTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -171,6 +201,24 @@
 			productReference = CEA21FC32C7ECCC3004E38F3 /* RecipeApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		CEA220012C802B76004E38F3 /* RecipeAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEA220082C802B76004E38F3 /* Build configuration list for PBXNativeTarget "RecipeAppTests" */;
+			buildPhases = (
+				CEA21FFE2C802B76004E38F3 /* Sources */,
+				CEA21FFF2C802B76004E38F3 /* Frameworks */,
+				CEA220002C802B76004E38F3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEA220072C802B76004E38F3 /* PBXTargetDependency */,
+			);
+			name = RecipeAppTests;
+			productName = RecipeAppTests;
+			productReference = CEA220022C802B76004E38F3 /* RecipeAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,6 +231,10 @@
 				TargetAttributes = {
 					CEA21FC22C7ECCC3004E38F3 = {
 						CreatedOnToolsVersion = 15.2;
+					};
+					CEA220012C802B76004E38F3 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = CEA21FC22C7ECCC3004E38F3;
 					};
 				};
 			};
@@ -200,6 +252,7 @@
 			projectRoot = "";
 			targets = (
 				CEA21FC22C7ECCC3004E38F3 /* RecipeApp */,
+				CEA220012C802B76004E38F3 /* RecipeAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -211,6 +264,13 @@
 			files = (
 				CEA21FCE2C7ECCC4004E38F3 /* Preview Assets.xcassets in Resources */,
 				CEA21FCB2C7ECCC4004E38F3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEA220002C802B76004E38F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +298,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CEA21FFE2C802B76004E38F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEA220052C802B76004E38F3 /* SearchViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEA220072C802B76004E38F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEA21FC22C7ECCC3004E38F3 /* RecipeApp */;
+			targetProxy = CEA220062C802B76004E38F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		CEA21FCF2C7ECCC4004E38F3 /* Debug */ = {
@@ -418,6 +494,42 @@
 			};
 			name = Release;
 		};
+		CEA220092C802B76004E38F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC22NUC7T9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = austinbiegler.RecipeAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RecipeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RecipeApp";
+			};
+			name = Debug;
+		};
+		CEA2200A2C802B76004E38F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HC22NUC7T9;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = austinbiegler.RecipeAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RecipeApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RecipeApp";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -435,6 +547,15 @@
 			buildConfigurations = (
 				CEA21FD22C7ECCC4004E38F3 /* Debug */,
 				CEA21FD32C7ECCC4004E38F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEA220082C802B76004E38F3 /* Build configuration list for PBXNativeTarget "RecipeAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEA220092C802B76004E38F3 /* Debug */,
+				CEA2200A2C802B76004E38F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

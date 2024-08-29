@@ -42,6 +42,7 @@ struct SearchView: View {
                     RecipeDetailView(
                         viewModel: RecipeDetailViewModel(
                             networkManager: viewModel.networkManager,
+                            coreDataManager: viewModel.coreDataManager,
                             recipeId: recipeId
                         )
                     )
@@ -68,7 +69,8 @@ struct SearchView: View {
 #Preview {
     SearchView(
         viewModel: SearchViewModel(
-            networkManager: NetworkManager(baseUrl: "")
+            networkManager: MockNetworkManager(),
+            coreDataManager: CoreDataManager()
         )
     )
 }

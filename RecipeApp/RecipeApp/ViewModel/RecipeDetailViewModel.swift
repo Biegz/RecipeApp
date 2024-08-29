@@ -8,19 +8,21 @@
 import Foundation
 
 class RecipeDetailViewModel: ObservableObject {
-    let networkManager: NetworkManager
+    let networkManager: NetworkManagerProtocol
+    let coreDataManager: CoreDataManager
     let recipeId: Int
     @Published var recipeInfo: RecipeInfoResponse?
     
-    init(networkManager: NetworkManager, recipeId: Int) {
+    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManager, recipeId: Int) {
         self.networkManager = networkManager
+        self.coreDataManager = coreDataManager
         self.recipeId = recipeId
         getRecipeInfoFromLocalDataStore()
     }
     
     private func getRecipeInfoFromLocalDataStore() {
         do {
-            let result = try CoreDataManager.shared.fetchRecipeInfo(with: recipeId)
+            let result = try coreDataManager.fetchRecipeInfo(with: recipeId)
             switch result {
                 case .success(let recipeInfo):
                     self.recipeInfo = RecipeInfoResponse(
